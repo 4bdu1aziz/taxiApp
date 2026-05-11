@@ -8,8 +8,6 @@ import com.taxiapp.user.repository.DriverRepository;
 import com.taxiapp.user.repository.PassengerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +17,6 @@ import java.util.Optional;
 public class UserService {
 
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
-
     private final PassengerRepository passengerRepository;
     private final DriverRepository driverRepository;
 
@@ -28,13 +25,14 @@ public class UserService {
         this.driverRepository = driverRepository;
     }
 
-    public PassengerResponse registerPassenger(String name, String email, String phone) {
+    public PassengerResponse registerPassenger(String name, String email, String phone, String password) {
         Passenger p = new Passenger();
         p.setName(name);
         p.setEmail(email);
         p.setPhone(phone);
+        p.setPassword(password);
         p = passengerRepository.save(p);
-        log.info("Passenger registered: id={}, name={}", p.getId(), p.getName());
+        log.info("Passenger registered: id={}", p.getId());
         return toPassengerResponse(p);
     }
 
@@ -44,34 +42,32 @@ public class UserService {
         return toPassengerResponse(p);
     }
 
-    public DriverResponse registerDriver(String name, String email, String phone, String license) {
+    public DriverResponse registerDriver(String name, String email, String phone, String license, String password) {
         Driver d = new Driver();
         d.setName(name);
         d.setEmail(email);
         d.setPhone(phone);
         d.setLicenseNumber(license);
+        d.setPassword(password);
         d.setStatus(Driver.DriverStatus.AVAILABLE);
         d = driverRepository.save(d);
-        log.info("Driver registered: id={}, name={}", d.getId(), d.getName());
+        log.info("Driver registered: id={}", d.getId());
         return toDriverResponse(d);
     }
 
-    @Cacheable(value = "drivers", key = "#id")
     public DriverResponse getDriver(Long id) {
-        log.info("Fetching driver {} from database", id);
         Driver d = driverRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Driver not found: " + id));
         return toDriverResponse(d);
     }
 
     @Transactional
-    @CacheEvict(value = "drivers", key = "#id")
     public DriverResponse updateStatus(Long id, String newStatus) {
         Driver d = driverRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Driver not found: " + id));
         d.setStatus(Driver.DriverStatus.valueOf(newStatus.toUpperCase()));
         d = driverRepository.save(d);
-        log.info("Driver {} status updated to {}", id, newStatus);
+        log.info("Driver {} status -> {}", id, newStatus);
         return toDriverResponse(d);
     }
 
@@ -80,7 +76,7 @@ public class UserService {
         return driverRepository.findAvailableDriverWithLock().map(d -> {
             d.setStatus(Driver.DriverStatus.BUSY);
             driverRepository.save(d);
-            log.info("Driver {} assigned, status -> BUSY", d.getId());
+            log.info("Driver {} assigned", d.getId());
             return toDriverResponse(d);
         });
     }

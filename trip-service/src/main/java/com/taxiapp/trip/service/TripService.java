@@ -42,12 +42,19 @@ public class TripService {
         trip.setPrice(calculatePrice());
         trip.setStatus(Trip.TripStatus.CREATED);
 
+        // Вместо одного водителя через lock, сначала смотрим кэш
         try {
-            DriverResponse driver = restTemplate.getForObject(userServiceUrl + "/drivers/available", DriverResponse.class);
-            if (driver != null) {
-                trip.setDriverId(driver.getId());
-                trip.setStatus(Trip.TripStatus.ACCEPTED);
-                log.info("Driver {} assigned to trip {}", driver.getId(), trip.getId());
+            // Пробуем получить список доступных из кэша
+            String availableUrl = userServiceUrl + "/drivers/available/list";
+            var drivers = restTemplate.getForObject(availableUrl, DriverResponse[].class);
+            if (drivers != null && drivers.length > 0) {
+                // Если есть в кэше — берём через атомарный lock
+                DriverResponse driver = restTemplate.getForObject(userServiceUrl + "/drivers/available", DriverResponse.class);
+                if (driver != null) {
+                    trip.setDriverId(driver.getId());
+                    trip.setStatus(Trip.TripStatus.ACCEPTED);
+                    log.info("Driver {} assigned to trip {}", driver.getId(), trip.getId());
+                }
             }
         } catch (Exception e) {
             log.warn("No available drivers");

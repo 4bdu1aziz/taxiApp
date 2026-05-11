@@ -25,7 +25,8 @@ public class UserController {
                 userService.registerPassenger(
                         body.get("name"),
                         body.get("email"),
-                        body.get("phone")
+                        body.get("phone"),
+                        body.getOrDefault("password", "")
                 )
         );
     }
@@ -42,7 +43,8 @@ public class UserController {
                         body.get("name"),
                         body.get("email"),
                         body.get("phone"),
-                        body.get("licenseNumber")
+                        body.get("licenseNumber"),
+                        body.getOrDefault("password", "")
                 )
         );
     }
