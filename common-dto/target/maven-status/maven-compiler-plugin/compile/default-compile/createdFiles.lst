@@ -1,0 +1,7 @@
+com\taxiapp\dto\AuthRequest.class
+com\taxiapp\dto\AuthResponse.class
+com\taxiapp\dto\TripResponse.class
+com\taxiapp\dto\TripRequest.class
+com\taxiapp\dto\NotificationRequest.class
+com\taxiapp\dto\DriverResponse.class
+com\taxiapp\dto\PassengerResponse.class

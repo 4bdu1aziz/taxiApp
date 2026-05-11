@@ -1,0 +1,10 @@
+com\taxiapp\user\controller\UserController.class
+com\taxiapp\user\UserServiceApplication.class
+com\taxiapp\user\repository\DriverRepository.class
+com\taxiapp\user\entity\Driver$DriverStatus.class
+com\taxiapp\user\controller\AuthController.class
+com\taxiapp\user\entity\Driver.class
+com\taxiapp\user\entity\Passenger.class
+com\taxiapp\user\repository\PassengerRepository.class
+com\taxiapp\user\security\JwtUtil.class
+com\taxiapp\user\service\UserService.class
