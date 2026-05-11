@@ -1,20 +1,18 @@
 server:
-  port: 8081
+  port: 8082
 
 spring:
   application:
-    name: user-service
+    name: trip-service
   datasource:
-    url: jdbc:postgresql://postgres-users:5432/taxi_users
+    url: jdbc:postgresql://localhost:5433/taxi_trips
     username: postgres
     password: postgres
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
-  data:
-    redis:
-      host: redis
-      port: 6379
-  cache:
-    type: redis
+
+taxi:
+  user-service-base: http://localhost:8081/api
+  notification-service-base: http://localhost:8083/api

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TaxiApp — демо этапов</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="layout">
+    <header class="header">
+      <h1>TaxiApp</h1>
+      <p class="subtitle">Пошаговый сценарий через API микросервисов</p>
+    </header>
+
+    <section class="card">
+      <h2>Базовые URL</h2>
+      <div class="grid-3">
+        <label>
+          User (8081)
+          <input type="url" id="baseUser" value="http://localhost:8081" />
+        </label>
+        <label>
+          Trip (8082)
+          <input type="url" id="baseTrip" value="http://localhost:8082" />
+        </label>
+        <label>
+          Notification (8083)
+          <input type="url" id="baseNotif" value="http://localhost:8083" />
+        </label>
+      </div>
+      <p class="hint">При запуске через Docker оставьте localhost и проброшенные порты из docker-compose.</p>
+    </section>
+
+    <section class="card state-card">
+      <h2>Текущее состояние</h2>
+      <dl class="state">
+        <div><dt>Пассажир ID</dt><dd id="stPassenger">—</dd></div>
+        <div><dt>Водитель ID</dt><dd id="stDriver">—</dd></div>
+        <div><dt>Поездка ID</dt><dd id="stTrip">—</dd></div>
+        <div><dt>Статус поездки</dt><dd id="stStatus">—</dd></div>
+        <div><dt>Токен (логин)</dt><dd id="stToken" class="truncate">—</dd></div>
+      </dl>
+    </section>
+
+    <section class="card">
+      <h2>Этапы</h2>
+      <p class="hint">Выполняйте сверху вниз: сначала пользователи, затем заказ и жизненный цикл поездки.</p>
+      <ol class="steps">
+        <li>
+          <span class="step-title">1. Логин (демо JWT)</span>
+          <button type="button" class="btn primary" data-action="login">Войти</button>
+        </li>
+        <li>
+          <span class="step-title">2. Регистрация пассажира</span>
+          <button type="button" class="btn primary" data-action="registerPassenger">Зарегистрировать пассажира</button>
+        </li>
+        <li>
+          <span class="step-title">3. Регистрация водителя (доступен для заказов)</span>
+          <button type="button" class="btn primary" data-action="registerDriver">Зарегистрировать водителя</button>
+        </li>
+        <li>
+          <span class="step-title">4. Список свободных водителей</span>
+          <button type="button" class="btn" data-action="listDrivers">GET /drivers/available/list</button>
+        </li>
+        <li>
+          <span class="step-title">5. Создать поездку</span>
+          <button type="button" class="btn primary" data-action="createTrip">Создать поездку</button>
+        </li>
+        <li>
+          <span class="step-title">6. Обновить поездку: в пути</span>
+          <button type="button" class="btn" data-action="statusStarted">Статус STARTED</button>
+        </li>
+        <li>
+          <span class="step-title">7. Завершить поездку</span>
+          <button type="button" class="btn" data-action="statusCompleted">Статус COMPLETED</button>
+        </li>
+        <li>
+          <span class="step-title">8. Оценка поездки (1–5)</span>
+          <button type="button" class="btn" data-action="rateTrip">Оценить на 5</button>
+        </li>
+        <li>
+          <span class="step-title">9. Уведомления по поездке</span>
+          <button type="button" class="btn" data-action="loadNotifications">Загрузить уведомления</button>
+        </li>
+        <li>
+          <span class="step-title">10. Статистика за сегодня</span>
+          <button type="button" class="btn" data-action="dailyStats">GET /stats/daily</button>
+        </li>
+      </ol>
+      <div class="row-actions">
+        <button type="button" class="btn accent" id="btnFullDemo">Запустить полный сценарий</button>
+        <button type="button" class="btn ghost" id="btnRefreshTrip">Обновить данные поездки</button>
+        <button type="button" class="btn ghost" id="btnClearLog">Очистить журнал</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Дополнительно</h2>
+      <div class="row-actions wrap">
+        <button type="button" class="btn" data-action="getPassenger">GET пассажира</button>
+        <button type="button" class="btn" data-action="getDriver">GET водителя</button>
+        <button type="button" class="btn" data-action="getTrip">GET поездки</button>
+        <button type="button" class="btn danger" data-action="statusCancelled">Отменить поездку (CANCELLED)</button>
+      </div>
+    </section>
+
+    <section class="card log-card">
+      <h2>Журнал</h2>
+      <pre id="log" class="log"></pre>
+    </section>
+
+    <footer class="footer">
+      Откройте страницу через локальный HTTP-сервер (например <code>cd web && python3 -m http.server 8765</code>), затем в браузере <code>http://localhost:8765</code> — так надёжнее с CORS, чем открытие файла с диска.
+    </footer>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -6,6 +6,7 @@ import com.taxiapp.user.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -49,6 +50,18 @@ public class UserController {
         );
     }
 
+    @GetMapping("/drivers/available/list")
+    public ResponseEntity<List<DriverResponse>> listAvailableDrivers() {
+        return ResponseEntity.ok(userService.listAvailableDrivers());
+    }
+
+    @GetMapping("/drivers/available")
+    public ResponseEntity<DriverResponse> findAvailableDriver() {
+        Optional<DriverResponse> driver = userService.findAvailableDriver();
+        return driver.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.noContent().build());
+    }
+
     @GetMapping("/drivers/{id}")
     public ResponseEntity<DriverResponse> getDriver(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getDriver(id));
@@ -59,12 +72,5 @@ public class UserController {
             @PathVariable Long id,
             @RequestBody Map<String, String> body) {
         return ResponseEntity.ok(userService.updateStatus(id, body.get("status")));
-    }
-
-    @GetMapping("/drivers/available")
-    public ResponseEntity<DriverResponse> findAvailableDriver() {
-        Optional<DriverResponse> driver = userService.findAvailableDriver();
-        return driver.map(ResponseEntity::ok)
-                .orElse(ResponseEntity.noContent().build());
     }
 }

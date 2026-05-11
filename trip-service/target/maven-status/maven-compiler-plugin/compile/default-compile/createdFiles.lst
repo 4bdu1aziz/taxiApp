@@ -1,6 +1,7 @@
-com\taxiapp\trip\entity\Trip$TripStatus.class
-com\taxiapp\trip\repository\TripRepository.class
-com\taxiapp\trip\service\TripService.class
-com\taxiapp\trip\controller\TripController.class
-com\taxiapp\trip\TripServiceApplication.class
-com\taxiapp\trip\entity\Trip.class
+com/taxiapp/trip/repository/TripRepository.class
+com/taxiapp/trip/config/CorsConfig.class
+com/taxiapp/trip/entity/Trip$TripStatus.class
+com/taxiapp/trip/entity/Trip.class
+com/taxiapp/trip/service/TripService.class
+com/taxiapp/trip/controller/TripController.class
+com/taxiapp/trip/TripServiceApplication.class

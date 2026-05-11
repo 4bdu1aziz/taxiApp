@@ -11,7 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -69,6 +71,12 @@ public class UserService {
         d = driverRepository.save(d);
         log.info("Driver {} status -> {}", id, newStatus);
         return toDriverResponse(d);
+    }
+
+    public List<DriverResponse> listAvailableDrivers() {
+        return driverRepository.findByStatus(Driver.DriverStatus.AVAILABLE).stream()
+                .map(this::toDriverResponse)
+                .collect(Collectors.toList());
     }
 
     @Transactional

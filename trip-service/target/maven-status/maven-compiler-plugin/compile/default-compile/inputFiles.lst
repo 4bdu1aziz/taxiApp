@@ -1,5 +1,6 @@
-C:\Users\admin\Desktop\kontrol\taxiApp\trip-service\src\main\java\com\taxiapp\trip\controller\TripController.java
-C:\Users\admin\Desktop\kontrol\taxiApp\trip-service\src\main\java\com\taxiapp\trip\entity\Trip.java
-C:\Users\admin\Desktop\kontrol\taxiApp\trip-service\src\main\java\com\taxiapp\trip\repository\TripRepository.java
-C:\Users\admin\Desktop\kontrol\taxiApp\trip-service\src\main\java\com\taxiapp\trip\service\TripService.java
-C:\Users\admin\Desktop\kontrol\taxiApp\trip-service\src\main\java\com\taxiapp\trip\TripServiceApplication.java
+/Users/levonsimonyan/Downloads/taxiApp-main 2/trip-service/src/main/java/com/taxiapp/trip/TripServiceApplication.java
+/Users/levonsimonyan/Downloads/taxiApp-main 2/trip-service/src/main/java/com/taxiapp/trip/config/CorsConfig.java
+/Users/levonsimonyan/Downloads/taxiApp-main 2/trip-service/src/main/java/com/taxiapp/trip/controller/TripController.java
+/Users/levonsimonyan/Downloads/taxiApp-main 2/trip-service/src/main/java/com/taxiapp/trip/entity/Trip.java
+/Users/levonsimonyan/Downloads/taxiApp-main 2/trip-service/src/main/java/com/taxiapp/trip/repository/TripRepository.java
+/Users/levonsimonyan/Downloads/taxiApp-main 2/trip-service/src/main/java/com/taxiapp/trip/service/TripService.java

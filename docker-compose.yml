@@ -58,6 +58,8 @@ services:
       - user-service
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-trips:5432/taxi_trips
+      TAXI_USER_SERVICE_BASE: http://user-service:8081/api
+      TAXI_NOTIFICATION_SERVICE_BASE: http://notification-service:8083/api
 
   notification-service:
     build: ./notification-service

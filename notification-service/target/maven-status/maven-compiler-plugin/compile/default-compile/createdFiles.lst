@@ -1,6 +1,7 @@
-com\taxiapp\notification\entity\NotificationTask.class
-com\taxiapp\notification\NotificationServiceApplication.class
-com\taxiapp\notification\repository\NotificationTaskRepository.class
-com\taxiapp\notification\entity\NotificationTask$NotificationStatus.class
-com\taxiapp\notification\controller\NotificationController.class
-com\taxiapp\notification\service\NotificationWorkerService.class
+com/taxiapp/notification/NotificationServiceApplication.class
+com/taxiapp/notification/entity/NotificationTask.class
+com/taxiapp/notification/controller/NotificationController.class
+com/taxiapp/notification/repository/NotificationTaskRepository.class
+com/taxiapp/notification/config/CorsConfig.class
+com/taxiapp/notification/entity/NotificationTask$NotificationStatus.class
+com/taxiapp/notification/service/NotificationWorkerService.class

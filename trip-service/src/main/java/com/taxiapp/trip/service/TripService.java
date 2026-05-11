@@ -6,6 +6,7 @@ import com.taxiapp.trip.entity.Trip;
 import com.taxiapp.trip.repository.TripRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
@@ -23,12 +24,19 @@ public class TripService {
     private final RestTemplate restTemplate;
     private final Random random = new Random();
 
-    private final String userServiceUrl = "http://user-service:8081/api";
-    private final String notificationServiceUrl = "http://notification-service:8083/api";
+    private final String userServiceUrl;
+    private final String notificationServiceUrl;
 
-    public TripService(TripRepository tripRepository) {
+    public TripService(
+            TripRepository tripRepository,
+            @Value("${taxi.user-service-base:http://user-service:8081/api}") String userServiceUrl,
+            @Value("${taxi.notification-service-base:http://notification-service:8083/api}") String notificationServiceUrl) {
         this.tripRepository = tripRepository;
         this.restTemplate = new RestTemplate();
+        this.userServiceUrl = userServiceUrl.endsWith("/") ? userServiceUrl.substring(0, userServiceUrl.length() - 1) : userServiceUrl;
+        this.notificationServiceUrl = notificationServiceUrl.endsWith("/")
+                ? notificationServiceUrl.substring(0, notificationServiceUrl.length() - 1)
+                : notificationServiceUrl;
     }
 
     @Transactional

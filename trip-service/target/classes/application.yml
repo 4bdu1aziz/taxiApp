@@ -13,8 +13,6 @@ spring:
       ddl-auto: update
     show-sql: true
 
-user-service:
-  url: http://localhost:8081
-
-notification-service:
-  url: http://localhost:8083
+taxi:
+  user-service-base: http://localhost:8081/api
+  notification-service-base: http://localhost:8083/api
